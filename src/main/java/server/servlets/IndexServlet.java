@@ -1,4 +1,4 @@
-package server;
+package server.servlets;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

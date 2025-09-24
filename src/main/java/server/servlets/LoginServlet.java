@@ -1,4 +1,6 @@
-package server;
+package server.servlets;
+
+import server.services.SignUpService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,8 +21,7 @@ public class LoginServlet  extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-        if ("admin".equalsIgnoreCase(login) && password.equals("12345678")) {
-
+        if (SignUpService.auth(login, password)) {
             // session
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("user", login);
@@ -30,13 +31,9 @@ public class LoginServlet  extends HttpServlet {
             Cookie cookie = new Cookie("user", login);
             cookie.setMaxAge(24 * 60 * 60);
             resp.addCookie(cookie);
-
             resp.sendRedirect("main.jsp");
-
-
-
         } else {
-            resp.sendRedirect("/login");
+            resp.sendRedirect("login.html");
         }
     }
 }

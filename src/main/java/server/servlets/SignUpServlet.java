@@ -1,4 +1,6 @@
-package server;
+package server.servlets;
+
+import server.services.SignUpService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,8 +19,12 @@ public class SignUpServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // registration
-
-        // in Map : login, password and after that use it in LoginServlet instead "login", "password"
+        String login = req.getParameter("login");
+        String password = req.getParameter("password");
+        if (SignUpService.signUp(login, password)) {
+            resp.sendRedirect("success_registration.html");
+        } else {
+            resp.sendRedirect("already_signed_up.html");
+        }
     }
 }
